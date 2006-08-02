@@ -6,8 +6,10 @@ use warnings;
 use Win32::OLE;
 use Digest::MD5 'md5_hex';
 
-our $VERSION      = 0.01;
-my $WSC_DIR      = 'C:\Windows\Temp';
+our $VERSION      = 0.02;
+my $WSC_DIR      = $ENV{TMP} || $ENV{TEMP} || 'C:\Windows\Temp';
+die "Temporary directory '$WSC_DIR' does not exist" unless -d $WSC_DIR;
+die "Temporary directory '$WSC_DIR' is not writable" unless -w $WSC_DIR;
 our $WSC_PREFIX   = 'InlineWin32COM.WSC';
 my @ToDelete      = ();
 my %MethodMapping = ();
